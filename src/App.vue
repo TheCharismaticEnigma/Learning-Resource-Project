@@ -1,14 +1,17 @@
 <!-- Main App component/Root Component. -->
 
 <script>
-import ButtonContainerVue from './components/ButtonContainer.vue';
 import TheHeader from './components/UI/TheHeader.vue';
 import ButtonContainer from './components/ButtonContainer.vue';
+import ResourceContainer from './components/ResourceContainer.vue';
+import AddResource from './components/AddResource.vue';
 
 export default {
   components: {
     TheHeader,
     ButtonContainer,
+    ResourceContainer,
+    AddResource,
   },
 
   data() {
@@ -24,11 +27,40 @@ export default {
         {
           id: 'google',
           name: 'Google',
-          description: 'Google that bitch! AHAHAHAHA! .',
+          description: 'Google that bitch! AHAHAHAHA! ',
+          link: 'https://www.google.com',
+        },
+
+        {
+          id: 'node',
+          name: 'Node.js Documentation',
+          description:
+            'Official documentation for Node.js! NO more monotonous and vexatious backend.   ',
           link: 'https://www.google.com',
         },
       ],
+
+      activeComponent: 'ResourceContainer',
     };
+  },
+
+  // Provide (data from parent) and use the key
+  // to find the data in inject:[] option in child component.
+
+  provide() {
+    return {
+      storedResources: this.storedResources,
+    };
+  },
+
+  methods: {
+    addLatestResource(resource) {
+      this.storedResources.push(resource);
+    },
+
+    toggleComponent(componentName) {
+      this.activeComponent = componentName;
+    },
   },
 };
 </script>
@@ -36,15 +68,17 @@ export default {
 <template>
   <the-header></the-header>
 
-  <button-container></button-container>
+  <button-container @change-component="toggleComponent"> </button-container>
 
-  <ul class="container" v-if="storedResources.length > 0">
-    <li v-for="resource in storedResources" :key="id">
-      <h2>{{ resource.name }}</h2>
-      <p>{{ resource.description }}</p>
-      <a :href="resource.link"> {{ resource.link }} </a>
-    </li>
-  </ul>
+  <keep-alive>
+    <component
+      @add-new-resource="addLatestResource"
+      v-bind:is="activeComponent"
+    ></component>
+  </keep-alive>
+
+  <!-- <add-resource @add-new-resource="addLatestResource"> </add-resource> -->
+  <!-- <resource-container></resource-container> -->
 </template>
 
 <!-- This contains GLOBAL APP STYLES. General Styles 
@@ -68,7 +102,6 @@ html {
 
 ul {
   list-style: none;
-  border: 2px solid black;
 }
 
 a {
@@ -84,7 +117,8 @@ body {
 
 .container {
   width: min(100%, 1080px);
-  margin: 0 auto;
+  margin-inline-start: auto;
+  margin-inline-end: auto;
 }
 
 /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
@@ -128,7 +162,7 @@ main {
 
 h1 {
   font-size: 2em;
-  margin: 0.67em 0;
+  margin: 0.5em 0;
 }
 
 /* Grouping content
