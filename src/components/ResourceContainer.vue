@@ -27,7 +27,7 @@ export default {
     <li
       class="resource-list__item"
       v-for="resource in storedResources"
-      :key="resource.id"
+      v-bind:key="resource.id"
     >
       <base-card class="resource__card">
         <template v-slot:cardContent>

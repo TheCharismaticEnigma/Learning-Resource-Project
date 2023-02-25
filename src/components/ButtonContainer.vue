@@ -10,6 +10,12 @@ export default {
     ButtonElement,
   },
 
+  data() {
+    return {
+      selectedButton: '',
+    };
+  },
+
   emits: ['change-component'],
 
   methods: {

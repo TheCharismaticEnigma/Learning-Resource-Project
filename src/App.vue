@@ -55,7 +55,8 @@ export default {
 
   methods: {
     addLatestResource(resource) {
-      this.storedResources.push(resource);
+      this.storedResources.unshift(resource);
+      this.activeComponent = 'ResourceContainer';
     },
 
     deleteCurrentResource(id) {
@@ -77,7 +78,7 @@ export default {
 </script>
 
 <template>
-  <the-header></the-header>
+  <the-header main-heading="`Learning Resources Manager`"></the-header>
 
   <button-container @change-component="toggleComponent"> </button-container>
 

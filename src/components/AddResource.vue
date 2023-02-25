@@ -115,8 +115,8 @@ export default {
 
   <teleport to="#app-body">
     <error-container
-      v-on:restore-component-event="unrenderErrorMessage"
       v-if="displayError"
+      v-on:restore-component-event="unrenderErrorMessage"
     >
     </error-container>
   </teleport>
@@ -164,10 +164,5 @@ export default {
 .form__input:focus {
   outline: none;
   border: 1px solid black;
-}
-
-.button--add {
-  font-size: 2.5rem;
-  box-shadow: 0.5px 0.5px 5px lightgrey inset;
 }
 </style>

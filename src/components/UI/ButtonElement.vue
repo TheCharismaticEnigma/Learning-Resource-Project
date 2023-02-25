@@ -35,11 +35,11 @@ export default {
   font-size: 2rem;
   font-style: italic;
   margin-right: 2rem;
+  max-width: 22rem;
   outline: none;
   padding: 2vh 2vw;
   text-align: center;
   transition: all 200ms ease-out;
-  max-width: 22rem;
 }
 
 .my-button:hover {
@@ -50,5 +50,32 @@ export default {
 
 .my-button:focus {
   outline: none;
+}
+
+.button--resource-delete {
+  transform: translateY(10%);
+  box-shadow: 0 0 5px 0 darkgray inset;
+  position: absolute;
+  right: 0%;
+  bottom: 10%;
+}
+
+.button--resource-delete {
+  transform: translateY(0%);
+}
+
+.button--add {
+  font-size: 2.5rem;
+  box-shadow: 0.5px 0.5px 5px lightgrey inset;
+}
+.error__button {
+  box-shadow: 0 0 4px gray inset;
+  color: black;
+  width: max(25%, 25rem);
+}
+
+.error__button:hover {
+  background: rgb(19, 4, 4);
+  color: wheat;
 }
 </style>

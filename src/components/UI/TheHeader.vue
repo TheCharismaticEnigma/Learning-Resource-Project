@@ -1,12 +1,16 @@
 // UI component. Register locally.
 
 <script>
-export default {};
+export default {
+  data() {},
+
+  props: ['mainHeading'],
+};
 </script>
 
 <template>
   <header class="app-header">
-    <h1 class="main-heading">Learning Resource Manager</h1>
+    <h1 class="main-heading">{{ mainHeading }}</h1>
   </header>
 </template>
 
