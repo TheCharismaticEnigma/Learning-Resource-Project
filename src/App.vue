@@ -18,7 +18,7 @@ export default {
     return {
       storedResources: [
         {
-          id: 'official-guide',
+          id: 'official guide',
           name: 'Official Guide',
           description: 'The Official Vue.js Documentation.',
           link: 'https://vuejs.org',
@@ -32,7 +32,7 @@ export default {
         },
 
         {
-          id: 'node',
+          id: `node.js documentation`,
           name: 'Node.js Documentation',
           description:
             'Official documentation for Node.js! NO more monotonous and vexatious backend.   ',
@@ -58,6 +58,17 @@ export default {
       this.storedResources.push(resource);
     },
 
+    deleteCurrentResource(id) {
+      const targetResource = this.storedResources.findIndex(
+        (resource) => resource.id === id
+      );
+
+      if (targetResource === -1) return;
+
+      this.storedResources.splice(targetResource, 1);
+      // splice mutates the original array.
+    },
+
     toggleComponent(componentName) {
       this.activeComponent = componentName;
     },
@@ -73,11 +84,15 @@ export default {
   <keep-alive>
     <component
       @add-new-resource="addLatestResource"
+      @delete-resource-event="deleteCurrentResource"
       v-bind:is="activeComponent"
     ></component>
   </keep-alive>
 
-  <!-- <add-resource @add-new-resource="addLatestResource"> </add-resource> -->
+  <!-- <add-resource
+       @delete-resource-event=""
+       @add-new-resource="addLatestResource"> 
+      </add-resource> -->
   <!-- <resource-container></resource-container> -->
 </template>
 

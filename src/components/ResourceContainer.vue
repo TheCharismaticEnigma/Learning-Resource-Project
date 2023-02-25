@@ -1,9 +1,23 @@
 <script>
+import ButtonElement from './UI/ButtonElement.vue';
+
 export default {
+  components: {
+    ButtonElement,
+  },
+
   inject: ['storedResources'],
 
   data() {
     return {};
+  },
+
+  emits: ['delete-resource-event'],
+
+  methods: {
+    emitDeleteEvent(resourceId) {
+      this.$emit('delete-resource-event', resourceId);
+    },
   },
 };
 </script>
@@ -30,6 +44,12 @@ export default {
               {{ 'View Resource' }}
             </a>
           </div>
+
+          <button-element
+            @click="emitDeleteEvent(resource.id)"
+            button-text="Delete Resource"
+            class="button--resource-delete"
+          ></button-element>
         </template>
       </base-card>
     </li>
@@ -52,6 +72,7 @@ export default {
 }
 
 .resource__card {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 2.5rem;
@@ -66,7 +87,7 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  width: fit-content;
+  width: 75%;
 }
 
 .resource__heading {
@@ -79,6 +100,7 @@ export default {
 .resource__description {
   font-family: sans-serif;
   font-size: 2.5rem;
+  width: 100%;
 }
 
 .resource__link {
@@ -92,6 +114,18 @@ export default {
   transform: translateY(-20%);
   transform-origin: left;
   color: black;
+}
+
+.button--resource-delete {
+  transform: translateY(10%);
+  box-shadow: 0 0 5px 0 darkgray inset;
+  position: absolute;
+  right: 0%;
+  bottom: 10%;
+}
+
+.button--resource-delete {
+  transform: translateY(0%);
 }
 </style>
 

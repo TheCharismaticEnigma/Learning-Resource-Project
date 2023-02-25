@@ -3,18 +3,22 @@
 
 <script>
 import ButtonElement from './UI/ButtonElement';
+import ErrorContainer from './ErrorContainer.vue';
 
 export default {
   name: 'AddResource',
 
   components: {
     ButtonElement,
+    ErrorContainer,
   },
 
   props: {},
 
   data() {
-    return {};
+    return {
+      displayError: false,
+    };
   },
 
   emits: ['add-new-resource'],
@@ -25,7 +29,11 @@ export default {
       const resourceDescription = this.$refs.descriptionInput.value;
       const resourceLink = this.$refs.resourceLinkInput.value;
 
-      if (!resourceTitle || !resourceDescription || !resourceLink) return;
+      if (!resourceTitle || !resourceDescription || !resourceLink) {
+        this.displayError = true;
+        window.scrollTo(0, 0); // scroll to the top of the window
+        return;
+      }
 
       const newResource = {
         id: resourceTitle.toLowerCase(),
@@ -40,6 +48,10 @@ export default {
 
       // Emit a custom event and then listen to its data value.
       this.$emit('add-new-resource', newResource);
+    },
+
+    unrenderErrorMessage() {
+      this.displayError = false;
     },
   },
 };
@@ -100,6 +112,14 @@ export default {
       </form>
     </template>
   </base-card>
+
+  <teleport to="#app-body">
+    <error-container
+      v-on:restore-component-event="unrenderErrorMessage"
+      v-if="displayError"
+    >
+    </error-container>
+  </teleport>
 </template>
 
 <style scoped>
@@ -143,6 +163,7 @@ export default {
 
 .form__input:focus {
   outline: none;
+  border: 1px solid black;
 }
 
 .button--add {
